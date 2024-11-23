@@ -1,0 +1,9 @@
+postgres=# WITH old_rows AS (
+   DELETE FROM ticket641
+   WHERE stub = 'c'
+   RETURNING stub
+)
+INSERT INTO ticket641 (stub)
+SELECT stub
+FROM old_rows
+ON CONFLICT (stub) DO NOTHING returning id;
